@@ -1,0 +1,49 @@
+# Dependency directories
+node_modules/
+.pnp/
+.pnp.js
+
+# Build output
+build/
+dist/
+*.log
+
+# Environment files
+# .env*
+# .env.local
+# .env.development
+# .env.test
+# .env.production
+
+# IDE and editor files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage
+coverage/
+
+# Misc
+.dockerignore
+.git/
+.gitignore
+.gitattributes
+*.md
+LICENSE
+
+# Optional (project-specific exclusions)
+# public/staging/  # If you have staging-specific assets
+# src/mock-data/   # If you have development mock data
