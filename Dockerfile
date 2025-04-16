@@ -1,6 +1,12 @@
 # Stage 1: Build the React application
 FROM node:23-slim AS builder
 
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_KEY
+
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_KEY=$VITE_SUPABASE_KEY
+
 # Install pnpm globally
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
