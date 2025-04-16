@@ -79,11 +79,13 @@ const Configuration:React.FC = () => {
     try {      
       const { id, updated_at, ...updateData } = thresholds;
 
+      // Will use django backend in another branch
       // Update threshold via  Django API
-      const djangoResponse = await axiosInstance.put(SET_THRESH, updateData);
-      if (djangoResponse.status !== 200) {
-        console.log('Failed to update thresholds via Django API');
-      }
+      // const djangoResponse = await axiosInstance.put(SET_THRESH, updateData);
+      // if (djangoResponse.status !== 200) {
+      //   console.log('Failed to update thresholds via Django API');
+      // }
+
       // Update threshold via Supabase
       const { error: supabaseError } = await supabase
         .from('fault_thresholds')
