@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance, { SET_THRESH } from './AxiosInstance';
+// import axiosInstance, { SET_THRESH } from './AxiosInstance';
 import { supabase} from './supabaseClient';
 
 
