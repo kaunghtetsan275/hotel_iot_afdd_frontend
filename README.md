@@ -59,43 +59,12 @@ This project uses **docker-compose** to manage and run multiple services. Config
 ---
 ## 📁 Clone the Repository
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/kaunghtetsan275/hotel_iot_afdd_frontend.git
+cd hotel_iot_afdd_frontend
 ```
 ## ⚙️ Environment Configuration
-Create a .env file in the root directory with the necessary environment variables. Here's an example:
-```bash
-# Supabase Configuration
-SUPABASE_URL=
-SUPABASE_API_KEY=
+Create a .env file in the root directory with the necessary environment variables.
 
-# RabbitMQ Configuration
-RABBITMQ_URL=
-RABBITMQ_HOST= 
-RABBITMQ_USER= 
-RABBITMQ_PASSWORD= 
-RABBITMQ_PORT= 
-EXCHANGE_NAME= 
-ALERT_EXCHANGE_NAME= 
-
-# TimescaleDB Configuration
-TIMESCALEDB_DATABASE= 
-TIMESCALEDB_USER= 
-TIMESCALEDB_PASSWORD= 
-TIMESCALEDB_HOST= 
-TIMESCALEDB_PORT= 
-
-MAX_ENTRIES=
-
-# React + Vite Configuration
-VITE_DEV_SERVER_URL=
-VITE_DJANGO_BASE_URL=
-VITE_DJANGO_CONFIG_GET_THRESH=
-VITE_DJANGO_CONFIG_SET_THRESH=
-
-VITE_SUPABASE_URL=
-VITE_SUPABASE_KEY=
-```
 💡 Customize the values based on your environment.
 Go to the cloned repository and start using docker-compose.
 🚀 Usage
