@@ -8,7 +8,7 @@
 ![RabbitMQ](https://img.shields.io/badge/Rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
 ![TimescaleDB](https://avatars.githubusercontent.com/u/8986001?s=48&v=4)
 
-The full-fledged system features the following:
+This full-fledged system features the following:
 - IoT sensor data simulation agent
 - IoT sensor fault detection agent
 - Data Management with RabbitMQ, TimescaleDB and Supabase
@@ -21,7 +21,7 @@ Sensor data simulation agent is for Indoor Air Quality (IAQ) sensors that genera
 
 Fault detection agent is designed to facilitate fault detection in IoT-based hotel systems. It integrates with various services such as RabbitMQ, Supabase, and TimescaleDB to process sensor data, detect anomalies, and publish alerts. The class provides methods for initializing database connections, managing RabbitMQ exchanges and queues, subscribing to real-time updates, and detecting faults based on predefined or dynamically updated thresholds. <br>
 
-Both of these agents are available as python modules. Their API reference can be found [here](!https://kaunghtetsan275.github.io/hotel_iot_afdd_data_simulation)
+Both of these agents are available as python modules. Their API reference can be found ![here](https://kaunghtetsan275.github.io/hotel_iot_afdd_data_simulation)
 
 ## Spicy Diagrams
 ```mermaid
@@ -58,7 +58,7 @@ graph LR
 
 ## Installation And Usage
 
-This project uses **docker-compose** to manage and run multiple services. Configuration values are stored in a `.env` file for easy setup and portability. 
+This project uses **docker-compose** to manage and run multiple services. Configuration values are stored in a `.env` file for easy setup and portability. You can also run each service separately in ![django backend](https://github.com/kaunghtetsan275/hotel_iot_afdd_backend) repo and ![simulation agent](https://github.com/kaunghtetsan275/hotel_iot_afdd_data_simulation) repo.
 ## 📦 Prerequisites
 ---
 - [Docker](https://www.docker.com/products/docker-desktop) installed
@@ -91,7 +91,9 @@ docker-compose down
 .
 ├── docker-compose.yaml
 ├── .env
-├── app/
+├── public
+├── src
+├── docs
 │   └── ...
 └── README.md
 ```
