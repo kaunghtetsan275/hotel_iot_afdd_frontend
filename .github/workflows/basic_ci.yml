@@ -1,4 +1,4 @@
-name: CI
+name: Build and Lint
 
 on:
   push:
@@ -18,10 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: 'npm'  # Enable automatic npm cache based on package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Uses package-lock.json for clean, deterministic install
 
       - name: Type check
         run: npm run tsc --noEmit
