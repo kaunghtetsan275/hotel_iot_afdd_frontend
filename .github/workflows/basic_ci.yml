@@ -18,22 +18,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'pnpm'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Type check
-        run: pnpm tsc --noEmit
+        run: npm run tsc --noEmit
 
       - name: Lint
-        run: pnpm lint
+        run: npm run lint
 
       - name: Build
-        run: pnpm build
+        run: npm run build
         env:
           VITE_DEV_SERVER_URL: ${{ secrets.VITE_DEV_SERVER_URL }}
           VITE_DJANGO_BASE_URL: ${{ secrets.VITE_DJANGO_BASE_URL }}
