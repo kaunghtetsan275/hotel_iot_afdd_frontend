@@ -21,7 +21,7 @@ Sensor data simulation agent is for Indoor Air Quality (IAQ) sensors that genera
 
 Fault detection agent is designed to facilitate fault detection in IoT-based hotel systems. It integrates with various services such as RabbitMQ, Supabase, and TimescaleDB to process sensor data, detect anomalies, and publish alerts. The class provides methods for initializing database connections, managing RabbitMQ exchanges and queues, subscribing to real-time updates, and detecting faults based on predefined or dynamically updated thresholds. <br>
 
-Both of these agents are available as python modules. Their API reference can be found ![here](https://kaunghtetsan275.github.io/hotel_iot_afdd_data_simulation)
+Both of these agents are available as python modules. Their API reference can be found [here](https://kaunghtetsan275.github.io/hotel_iot_afdd_data_simulation)
 
 ## Spicy Diagrams
 ```mermaid
