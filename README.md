@@ -58,7 +58,7 @@ graph LR
 
 ## Installation And Usage
 
-This project uses **docker-compose** to manage and run multiple services. Configuration values are stored in a `.env` file for easy setup and portability. You can also run each service separately in ![django backend](https://github.com/kaunghtetsan275/hotel_iot_afdd_backend) repo and ![simulation agent](https://github.com/kaunghtetsan275/hotel_iot_afdd_data_simulation) repo.
+This project uses **docker-compose** to manage and run multiple services. Configuration values are stored in a `.env` file for easy setup and portability. You can also run each service separately in [django backend](https://github.com/kaunghtetsan275/hotel_iot_afdd_backend) repo and [simulation agent](https://github.com/kaunghtetsan275/hotel_iot_afdd_data_simulation) repo.
 ## 📦 Prerequisites
 ---
 - [Docker](https://www.docker.com/products/docker-desktop) installed
