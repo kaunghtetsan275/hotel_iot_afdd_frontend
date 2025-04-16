@@ -1,4 +1,13 @@
 # Hotel IoT  Automatic Fault Detection and Diagnostic (AFDD)
+![CI](https://github.com/kaunghtetsan275/hotel_iot_afdd_frontend/actions/workflows/basic_ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/language-Python-blue)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![RabbitMQ](https://img.shields.io/badge/Rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
+![TimescaleDB](https://avatars.githubusercontent.com/u/8986001?s=48&v=4)
+
 The full-fledged system features the following:
 - IoT sensor data simulation agent
 - IoT sensor fault detection agent
