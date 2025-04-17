@@ -35,12 +35,13 @@ graph LR
     subgraph "Data Processing & Storage Layer"
         B -- Publishes Sensor Data --> E(Fault Detection Agent);
         E -- Publishes Fault Status --> B;
-        B -- Stores Raw Data --> F((TimescaleDB));
+        E -- Stores Raw Data --> F((TimescaleDB));
         E -- Threshold Fetch, Stores Latest Data & Fault Status --> G((Supabase));
     end
 
     subgraph "Backend API Layer (Django)"
         H[RESTful APIs] -- Fetch Data --> G;
+        H -- Fetch Record History --> F;
         I[Fault Detection Config APIs] -- Update Threshold --> G;
     end
 
@@ -53,7 +54,7 @@ graph LR
 
     direction LR
 ```  
-<p style="text-align:center;">System Architecture Diagram</p>
+<p style="text-align:center;">System Architecture Diagram of Hotel IoT AFDD</p>
 <p>This system architecture consists of four layers: simulated sensor agents (IAQ, Life Being, Power Meter) publish data to RabbitMQ in the IoT Data Simulation Layer. In the Data Processing & Storage Layer, RabbitMQ routes data to a Fault Detection Agent for analysis and to TimescaleDB for raw data storage; the agent also stores thresholds, latest readings, and fault status in Supabase. The Backend API Layer (Django) exposes RESTful APIs for fetching data and updating fault detection thresholds. The Frontend Layer (React) includes an Alarm Management UI for monitoring and an AFDD Setting UI for configuring thresholds, both interacting with Supabase and backend APIs, with real-time updates handled via Supabase subscriptions.<p>
 
 ## Installation And Usage
