@@ -1,24 +1,24 @@
 services:
-  hiafdd_backend:
-      container_name: hiafdd_backend_container
+  django_backend:
+      container_name: django_backend
       build:
         context: https://github.com/kaunghtetsan275/hotel_iot_afdd_backend.git
         dockerfile: Dockerfile
-      command: sh -c "python manage.py makemigrations && python manage.py migrate && gunicorn afdd_backend.wsgi:application --bind 0.0.0.0:8000"
+      command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py load_from_supabase && gunicorn afdd_backend.wsgi:application --bind 0.0.0.0:8000"
       ports:
-        - "8001:8000"
+        - "8000:8000"
       env_file:
         - .env
       environment:
-        - ENVIRONMENT=docker
+        - TIMESCALEDB_HOST=timescaledb-iot
+        - TIMESCALEDB_PORT=5434
         - DEBUG=False
       depends_on:
-        - rabbitmq-afdd
-        - timescaledb-afdd
+        - timescaledb-iot
       restart: unless-stopped
   
-  hiafdd_frontend:
-    container_name: hiafdd_frontend_container
+  react_frontend:
+    container_name: react_frontend
     build:
       context: https://github.com/kaunghtetsan275/hotel_iot_afdd_frontend.git
       dockerfile: Dockerfile
@@ -31,32 +31,37 @@ services:
       - .env
     environment:
       - DEBUG=False
-    working_dir: /hiafdd_frontend
+    working_dir: /react_frontend
+    depends_on:
+        - django_backend
     restart: unless-stopped
 
   simulation:
-    container_name: simulation_agents
+    container_name: simulation_agent
     build:
       context: https://github.com/kaunghtetsan275/hotel_iot_afdd_data_simulation.git
       dockerfile: Dockerfile
     env_file:
       - .env
     environment:
-      - ENVIRONMENT=docker
+      - RABBITMQ_HOST=rabbitmq-iot
+      - RABBITMQ_PORT=5672
+      - TIMESCALEDB_HOST=timescaledb-iot
+      - TIMESCALEDB_PORT=5432
       - DEBUG=False
     working_dir: /simulation
     depends_on:
-      - rabbitmq-afdd
-      - timescaledb-afdd
+      - rabbitmq-iot
+      - timescaledb-iot
     restart: unless-stopped
 
-  rabbitmq-afdd:
+  rabbitmq-iot:
     image: rabbitmq:3-management
-    container_name: rabbitmq-afdd
+    container_name: rabbitmq-iot
     hostname: rabbitmq-host
     ports:
-      - "5672:5672" 
-      - "15672:15672"
+      - "5673:5672" 
+      - "15673:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -67,15 +72,15 @@ services:
       timeout: 5s
       retries: 5
 
-  timescaledb-afdd:
+  timescaledb-iot:
     image: timescale/timescaledb:latest-pg14
-    container_name: timescaledb-afdd
+    container_name: timescaledb-iot
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: afdd
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - timescaledb_data:/var/lib/postgresql/data
     restart: unless-stopped
