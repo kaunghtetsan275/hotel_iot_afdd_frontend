@@ -1,13 +1,33 @@
 // ✅ FaultAlertManagement.tsx
 import React, { useEffect, useState } from 'react';
-import { supabase, SUPABASE_URL, SUPABASE_HEADERS } from './supabaseClient';
+import { supabase, SUPABASE_URL, SUPABASE_HEADERS } from '../config/supabaseClient';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
+import FaultFilterSelect from '../components/ui/FaultFliterSelect';
+
 
 const FaultAlertManagement: React.FC = () => {
-  const [filter, setFilter] = useState({ hotel: '', floor: '', room: '', sensor_type: '', device: '', status: '' });
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Real-time filter from URL
+  const filter = {
+    fhotel: searchParams.get('fhotel') || '',
+    status: searchParams.get('status') || '',
+  };
+
+  // Setters that update only their own params, preserving the others
+  const setFilter = (newFilter: { fhotel: string; status: string }) => {
+      const newParams = new URLSearchParams(searchParams);
+      if (newFilter.fhotel !== undefined) {
+        newParams.set('fhotel', newFilter.fhotel);
+      }
+      if (newFilter.status !== undefined) {
+        newParams.set('status', newFilter.status);
+      }
+      setSearchParams(newParams, { replace: false });
+    };
 
   const [hotels, setHotels] = useState<{ id: string; name: string, code: string }[]>([]);
-  // const [devices, setDevices] = useState<{ id: string; sensor_type: string, device_identifier: string}[]>([]);
 
   type LiveRow = {
     id: number;
@@ -92,7 +112,7 @@ const FaultAlertManagement: React.FC = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [filter.hotel]);
+  }, [filter.fhotel]);
 
   useEffect(() => {
     axios.get(`${SUPABASE_URL}/rest/v1/hotels`, { headers: SUPABASE_HEADERS })
@@ -104,29 +124,7 @@ const FaultAlertManagement: React.FC = () => {
       <h2 className="text-xl text-center mb-4 bg-indigo-500 font-sans"><b>Fault Alert Management</b></h2>
       <p>Filter by: </p>
       <div className="flex-1 flex flex-col justify-self-center text-center">
-          <div className="flex-1 justify-self-center text-center">
-            <select
-            value={filter.hotel}
-            onChange={(e) => setFilter(prev => ({ ...prev, hotel: e.target.value, floor: '', room: '', device: '' }))}
-            className = {`afdd-select`}
-            >
-              <option value="">--hotel--</option>
-              {hotels.map((h) => (
-              <option key={h.id} value={h.code}>{h.name}</option>
-                ))}
-            </select>
-            <select 
-            className='afdd-select'
-            value={filter.status}
-            onChange={(e) => setFilter(prev => ({ ...prev, status: e.target.value }))}
-            disabled={!filter.hotel}>
-              <option value="">--status--</option>
-              <option value="open">open</option>
-              <option value="acknowledged">acknowledged</option>
-              <option value="dismissed">dismissed</option>  
-            </select>
-
-          </div>
+      <FaultFilterSelect hotels={hotels} filter={filter} setFilter={setFilter} />
       </div>
       
       <div className="flex flex-col max-h-[495px] rounded-2xl gap-2
@@ -137,7 +135,7 @@ const FaultAlertManagement: React.FC = () => {
           Object.keys(liveRows)
           .filter((key) => {
             const row = liveRows[key];
-            const matchesHotel = !filter.hotel || row.device_identifier.startsWith(filter.hotel); // ← change logic if needed
+            const matchesHotel = !filter.fhotel || row.device_identifier.startsWith(filter.fhotel); // ← change logic if needed
             const matchesStatus = !filter.status || row.status === filter.status;
             return matchesHotel && matchesStatus;
           })
