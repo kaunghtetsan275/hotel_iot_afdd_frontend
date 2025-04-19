@@ -120,8 +120,8 @@ const FaultAlertManagement: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col p-4 bg-[#4c37e73b] rounded-2xl gap-5">
-      <h2 className="text-xl text-center mb-4 bg-indigo-500 font-sans"><b>Fault Alert Management</b></h2>
+    <div className="flex-1 flex flex-col p-4 bg-[#4c37e73b] rounded-2xl gap-3">
+      <h2 className="text-xl text-center bg-indigo-500 font-sans rounded-2xl"><b>Fault Alert Management</b></h2>
       <p>Filter by: </p>
       <div className="flex-1 flex flex-col justify-self-center text-center">
       <FaultFilterSelect hotels={hotels} filter={filter} setFilter={setFilter} />
@@ -141,14 +141,31 @@ const FaultAlertManagement: React.FC = () => {
           })
           .reverse()
           .map((key) => (
-            <div key={key} className="flex flex-col text-center border rounded bg-indigo-400">
-              <p>Fault ID: {String(liveRows[key].id)} :: status is {liveRows[key].status} </p>
-              <p>Fault Type: {liveRows[key].fault_type}</p>
-              <p>Message: {liveRows[key].message}</p>
-              <p>Detected At: {new Date(liveRows[key].detected_at).toLocaleString()}</p>
-              <div className='flex flex-col gap-1 justify-self-center'>
-                <button onClick={() => handleAcknowledge(liveRows[key].did)}>Acknowledge</button>
-                <button onClick={() => handleDismiss(liveRows[key].did)}>Dismiss</button>
+            <div key={key}>
+              <p className='text-sm text-left text-amber-700'>{liveRows[key].message} at device: {liveRows[key].device_identifier}</p>
+              <div className="flex flex-col md:flex-row text-center border rounded bg-indigo-400 justify-center p-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-1">
+                  <div className='flex flex-row md:flex-col justify-center items-center gap-1'>
+                    <div>Fault ID:</div>
+                    <div>{String(liveRows[key].id)}</div>
+                  </div>
+                  <div className='flex flex-row md:flex-col justify-center items-center gap-1'>
+                    <div>Status:</div>
+                    <div>{liveRows[key].status}</div>
+                  </div>
+                  <div className='flex flex-row md:flex-col justify-center items-center gap-1'>
+                    <div>Type:</div>
+                    <div>{liveRows[key].fault_type}</div>
+                  </div>
+                  <div className='flex flex-row md:flex-col justify-center items-center gap-1'>
+                    <div>Time:</div>
+                    <div>{new Date(liveRows[key].detected_at).toLocaleString()}</div>
+                  </div>
+                </div>
+                <div className='flex flex-row gap-1 justify-center items-center'>
+                  <button onClick={() => handleAcknowledge(liveRows[key].did)}>Acknowledge</button>
+                  <button onClick={() => handleDismiss(liveRows[key].did)}>Dismiss</button>
+                </div>
               </div>
             </div>
           ))

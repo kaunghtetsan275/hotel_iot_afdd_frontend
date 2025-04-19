@@ -8,20 +8,16 @@ const Dashboard: React.FC = () => (
     <Route
       path="/"
       element={
-        <div className="flex-1 flex flex-col md:flex-row gap-2">
-          <div className="flex-1">
+        <div className="flex-1 flex flex-col lg:flex-row-reverse gap-2">
+          <div className="flex-[1]">
             <RealtimeDataMonitoring />
           </div>
-          <div className="flex-1">
+          <div className="flex-[2]">
             <FaultAlertManagement />
           </div>
         </div>
       }
     />
-    {/* Example: add more dashboard subroutes if needed */}
-    {/* <Route path="monitoring" element={<RealtimeDataMonitoring />} /> */}
-    {/* <Route path="alerts" element={<FaultAlertManagement />} /> */}
-    {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
   </Routes>
 );
 

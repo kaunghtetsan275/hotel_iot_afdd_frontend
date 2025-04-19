@@ -115,13 +115,14 @@ const Configuration:React.FC = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center mx-auto w-screen gap-2">
+    <div className="flex-1 flex flex-col gap-2">
       <div className='flex-box box-border' style={{
         fontWeight: 'bold', 
         padding: '1rem', 
         backgroundColor: '#6366f1', 
         borderRadius: '10px',
         marginTop: '0.5rem',
+        textAlign: 'center',
         }}>
         <strong>Fault Detection Thresholds</strong>
       </div>
@@ -138,7 +139,7 @@ const Configuration:React.FC = () => {
         </div>
       )}
 
-      <div className="flex-1 flex flex-col w-full bg-[#4c37e73b] shadow-md box-border rounded-3xl">
+      <div className="flex-1 flex flex-col bg-[#4c37e73b] shadow-md box-border rounded-3xl">
       <ThresholdForm
         thresholds={thresholds}
         isEditing={isEditing}

@@ -36,14 +36,14 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
   handleCancel,
   handleSubmit,
 }) => (
-  <div className="flex-1 flex flex-col w-full bg-[#4c37e73b] shadow-md box-border rounded-3xl">
+  <div className="flex-1 flex flex-col bg-[#4c37e73b] shadow-md box-border rounded-3xl">
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', margin: '1rem', padding: '0.5rem', gap: '1rem' }}>
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-2">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-5 justify-center items-center gap-2">
         {/* Temperature Section */}
         <div className="border border-gray-200 rounded-lg p-4 bg-indigo-400 text-center">
-          <h3 className="text-lg font-semibol mb-4">Temperature (°C)</h3>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Minimum</label>
+          <h3 className="text-lg font-semibol">Temperature (°C)</h3>
+          <div className="">
+            <label className="block text-sm font-bold">Minimum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -58,8 +58,8 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
               <p>{thresholds.temperature_min || 'Not set'}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Maximum</label>
+          <div className="">
+            <label className="block text-sm font-bold ">Maximum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -78,9 +78,9 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
 
         {/* CO2 Section */}
         <div className="border border-gray-200 rounded-lg p-4 bg-indigo-400 text-center">
-          <h3 className="text-lg font-semibol mb-4">CO2 (ppm)</h3>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Minimum</label>
+          <h3 className="text-lg font-semibol ">CO2 (ppm)</h3>
+          <div className="">
+            <label className="block text-sm font-bold ">Minimum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -95,8 +95,8 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
               <p>{thresholds.co2_min || 'Not set'}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Maximum</label>
+          <div className="">
+            <label className="block text-sm font-bold ">Maximum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -115,9 +115,9 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
 
         {/* Power Section */}
         <div className="border border-gray-200 rounded-lg p-4 bg-indigo-400 text-center">
-          <h3 className="text-lg font-semibol mb-4">Power (kW)</h3>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Minimum</label>
+          <h3 className="text-lg font-semibol ">Power (kW)</h3>
+          <div className="">
+            <label className="block text-sm font-bold ">Minimum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -132,13 +132,13 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
               <p>{thresholds.power_kw_min || 'Not set'}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Maximum</label>
+          <div className="">
+            <label className="block text-sm font-bold ">Maximum</label>
             {isEditing ? (
               <input
                 type="number"
                 step="0.01"
-                className="text-center shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="text-center shadow appearance-auto border rounded max-w-full py-2 px-3 focus:outline-none focus:shadow-outline"
                 name="power_kw_max"
                 value={thresholds.power_kw_max || ''}
                 onChange={handleInputChange}
@@ -152,9 +152,9 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
 
         {/* Sensitivity Section */}
         <div className="border border-gray-200 rounded-lg p-4 bg-indigo-400 text-center">
-          <h3 className="text-lg font-semibol mb-4">Sensitivity</h3>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Minimum</label>
+          <h3 className="text-lg font-semibol ">Sensitivity</h3>
+          <div className="">
+            <label className="block text-sm font-bold ">Minimum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -169,8 +169,8 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
               <p>{thresholds.sensitivity_min || 'Not set'}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Maximum</label>
+          <div className="">
+            <label className="block text-sm font-bold ">Maximum</label>
             {isEditing ? (
               <input
                 type="number"
@@ -189,8 +189,8 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
 
         {/* Other Section */}
         <div className="border border-gray-200 rounded-lg p-4 bg-indigo-400 text-center">
-          <h3 className="text-lg font-semibol mb-4">Other Settings</h3>
-          <div className="flex items-center justify-center gap-5 mb-4">
+          <h3 className="text-lg font-semibol ">Other Settings</h3>
+          <div className="flex items-center justify-center gap-5 ">
             <input
               type="checkbox"
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
@@ -224,7 +224,7 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
       {!isEditing && (
         <button
           onClick={handleEditClick}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+          className="hover:bg-blue-700 font-bold rounded"
           type="button"
         >
           Edit Thresholds
@@ -236,7 +236,7 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
         <div className="flex justify-center gap-4">
           <button
             type="submit"
-            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`hover:bg-blue-70 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={isSaving}
           >
             {isSaving ? (
@@ -267,7 +267,7 @@ const ThresholdForm: React.FC<ThresholdFormProps> = ({
           <button
             type="button"
             onClick={handleCancel}
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="hover:bg-gray-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Cancel
           </button>

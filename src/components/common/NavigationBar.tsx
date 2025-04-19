@@ -9,7 +9,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ activeTab, setActiveTab }
   const tabs = ['dashboard', 'configuration', 'analytics'];
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col md:flex-row justify-center">
       {tabs.map(tab => (
         <button
           key={tab}
