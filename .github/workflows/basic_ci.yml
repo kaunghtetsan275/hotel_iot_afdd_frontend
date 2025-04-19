@@ -22,8 +22,8 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8  # Adjust to your pnpm version
-          run_install: false  # We'll run install manually
+          version: 8
+          run_install: false
 
       - name: Get pnpm store path
         id: pnpm-cache
