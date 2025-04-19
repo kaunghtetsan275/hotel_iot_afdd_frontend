@@ -3,22 +3,7 @@ import React, { useEffect, useState} from 'react';
 import { supabase, SUPABASE_URL, SUPABASE_HEADERS } from '../config/supabaseClient';
 import { useSearchParams } from 'react-router-dom';
 import RealTimeDataFilterSelect from '../components/ui/RealTimeDataFilterSelect';
-// import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-// import ErrorBoundary from './ErrorBoundary';
 import axios from 'axios';
-
-// Register the required components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const defaultFilter = { hotel: '', floor: '', room: '', sensor_type: '', device: '' };
 
@@ -92,21 +77,6 @@ const RealtimeDataMonitoring: React.FC = () => {
               datetime: newData.datetime,
             },
           }));
-
-          // setData((prev) => [
-          //   ...prev,
-          //   {
-          //     datetime: newData.datetime,
-          //     temperature_value: newData.datapoint === 'temperature' ? newData.value : null,
-          //     humidity_value: newData.datapoint === 'humidity' ? newData.value : null,
-          //     co2_value: newData.datapoint === 'co2' ? newData.value : null,
-          //     power_meter_value: newData.datapoint === 'power_meter' ? newData.value : null,
-          //     online_status_value: newData.datapoint === 'online_status' ? newData.value : null,
-          //     sensitivity_value: newData.datapoint === 'sensitivity' ? newData.value : null,
-          //     occupancy_status_value: newData.datapoint === 'occupancy_status' ? newData.value : null,
-          //     device_id: newData.device_id,
-          //   } as RealtimeData,
-          // ]);
         }
       )
       .subscribe();
@@ -159,8 +129,8 @@ const RealtimeDataMonitoring: React.FC = () => {
   }, [filter.room]);
 
   return (
-    <div className="flex-1 flex flex-col p-4 bg-[#4c37e73b] gap-3">
-      <h2 className="text-xl text-center mb-4 bg-indigo-500 font-sans"><b>Realtime Data Monitoring</b></h2>
+    <div className="flex-1 flex flex-col p-4 bg-[#4c37e73b] gap-3 rounded-2xl">
+      <h2 className="text-xl text-center bg-indigo-500 font-sans rounded-2xl"><b>Realtime Data Monitoring</b></h2>
       <p>Filter by: </p>
       <div className="flex-1">
       <RealTimeDataFilterSelect
