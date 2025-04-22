@@ -3,8 +3,13 @@ services:
       container_name: django_backend
       build:
         context: https://github.com/kaunghtetsan275/hotel_iot_afdd_backend.git
-        dockerfile: Dockerfile
-      command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py load_from_supabase && gunicorn afdd_backend.wsgi:application --bind 0.0.0.0:8000"
+        dockerfile: Dockerfile.dev
+      command: sh -c "python manage.py collectstatic --noinput &&
+                    python manage.py makemigrations && 
+                    python manage.py migrate && 
+                    python manage.py create_default_superuser &&
+                    python manage.py load_from_supabase && 
+                    gunicorn afdd_backend.wsgi:application --bind 0.0.0.0:8000"
       ports:
         - "8000:8000"
       env_file:
@@ -15,6 +20,8 @@ services:
         - DEBUG=False
       depends_on:
         - timescaledb-iot
+      volumes:
+        - static_volume:/afdd_backend/staticfiles
       restart: unless-stopped
   
   react_frontend:
@@ -26,12 +33,14 @@ services:
         VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
         VITE_SUPABASE_KEY: ${VITE_SUPABASE_KEY}
     ports:
-      - "80:80"
+      - "81:80"
     env_file:
       - .env
     environment:
       - DEBUG=False
     working_dir: /react_frontend
+    volumes:
+      - static_volume:/afdd_backend/staticfiles
     depends_on:
         - django_backend
     restart: unless-stopped
@@ -92,3 +101,4 @@ services:
 
 volumes:
   timescaledb_data:
+  static_volume:
