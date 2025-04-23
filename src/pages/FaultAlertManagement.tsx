@@ -40,13 +40,13 @@ const FaultAlertManagement: React.FC = () => {
   };
   const [liveRows, setLiveRows] = useState<Record<string, LiveRow>>({});
   const handleAcknowledge = async (id: number) => {
-    console.log('id ', id, " dismissed");
-      await supabase.from('fault_status').update({ status: 'acknowledged' }).eq('did', id);
+    // console.log('id ', id, " acknowledged");
+      await supabase.from('fault_status').update({ status: 'acknowledged' }).eq('id', id);
     };
   
     const handleDismiss = async (id: number) => {
-      console.log('id ', id, " dismissed");
-      await supabase.from('fault_status').update({ status: 'dismissed' }).eq('did', id);
+      // console.log('id ', id, " dismissed");
+      await supabase.from('fault_status').update({ status: 'dismissed' }).eq('id', id);
     };
   
   useEffect(() => {
@@ -163,8 +163,8 @@ const FaultAlertManagement: React.FC = () => {
                   </div>
                 </div>
                 <div className='flex flex-row gap-1 justify-center items-center'>
-                  <button onClick={() => handleAcknowledge(liveRows[key].did)}>Acknowledge</button>
-                  <button onClick={() => handleDismiss(liveRows[key].did)}>Dismiss</button>
+                  <button onClick={() => handleAcknowledge(liveRows[key].id)}>Acknowledge</button>
+                  <button onClick={() => handleDismiss(liveRows[key].id)}>Dismiss</button>
                 </div>
               </div>
             </div>
