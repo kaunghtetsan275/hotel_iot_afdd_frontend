@@ -4,19 +4,14 @@ services:
       build:
         context: https://github.com/kaunghtetsan275/hotel_iot_afdd_backend.git
         dockerfile: Dockerfile
-      command: sh -c "python manage.py collectstatic --noinput &&
-                    python manage.py makemigrations && 
-                    python manage.py migrate && 
-                    python manage.py create_default_superuser &&
-                    python manage.py load_from_supabase && 
-                    gunicorn afdd_backend.wsgi:application --bind 0.0.0.0:8000"
       ports:
-        - "8000:8000"
+        - "81:10000"
       env_file:
         - .env
       environment:
         - TIMESCALEDB_HOST=timescaledb-iot
         - TIMESCALEDB_PORT=5434
+        - PORT=10000
         - DEBUG=False
       depends_on:
         - timescaledb-iot
@@ -27,13 +22,13 @@ services:
   react_frontend:
     container_name: react_frontend
     build:
-      context: https://github.com/kaunghtetsan275/hotel_iot_afdd_frontend.git
+      context: .
       dockerfile: Dockerfile
       args:
         VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
         VITE_SUPABASE_KEY: ${VITE_SUPABASE_KEY}
     ports:
-      - "81:80"
+      - "5173:80"
     env_file:
       - .env
     environment:
@@ -69,7 +64,6 @@ services:
     container_name: rabbitmq-iot
     hostname: rabbitmq-host
     ports:
-      - "5673:5672" 
       - "15673:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
@@ -89,7 +83,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: afdd
     ports:
-      - "5434:5432"
+      - "5432:5432"
     volumes:
       - timescaledb_data:/var/lib/postgresql/data
     restart: unless-stopped
