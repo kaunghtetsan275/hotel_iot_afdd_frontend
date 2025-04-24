@@ -1,7 +1,7 @@
 // ✅ FaultAlertManagement.tsx
 import React, { useEffect, useState } from 'react';
-import { supabase, SUPABASE_URL, SUPABASE_HEADERS } from '../config/supabaseClient';
-import axios from 'axios';
+import { supabase } from '../config/supabaseClient';
+import axiosInstance from '../config/AxiosInstance';
 import { useSearchParams } from 'react-router-dom';
 import FaultFilterSelect from '../components/ui/FaultFliterSelect';
 
@@ -115,8 +115,11 @@ const FaultAlertManagement: React.FC = () => {
   }, [filter.fhotel]);
 
   useEffect(() => {
-    axios.get(`${SUPABASE_URL}/rest/v1/hotels`, { headers: SUPABASE_HEADERS })
-        .then(res => setHotels(res.data));
+    const fetchHotels = async () => {
+      await axiosInstance.get("/hotels").then(res => setHotels(res.data));
+    };
+
+    fetchHotels();
   }, []);
 
   return (
@@ -135,7 +138,7 @@ const FaultAlertManagement: React.FC = () => {
           Object.keys(liveRows)
           .filter((key) => {
             const row = liveRows[key];
-            const matchesHotel = !filter.fhotel || row.device_identifier.startsWith(filter.fhotel); // ← change logic if needed
+            const matchesHotel = !filter.fhotel || row.device_identifier.startsWith(filter.fhotel);
             const matchesStatus = !filter.status || row.status === filter.status;
             return matchesHotel && matchesStatus;
           })

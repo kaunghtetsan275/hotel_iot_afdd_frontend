@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import axiosInstance, { SET_THRESH } from './AxiosInstance';
-import { supabase} from '../config/supabaseClient';
+import axiosInstance, { GET_THRESH, SET_THRESH } from '../config/AxiosInstance';  
 import ThresholdForm from '../components/forms/ThresholdForm';
 
 
@@ -30,28 +29,21 @@ const Configuration:React.FC = () => {
 
   // Fetch initial thresholds from Supabase
   useEffect(() => {
-    const fetchThresholds = async () => {
+    const djangoResponse = async () => {
       try {
-        const { data, error: supabaseError } = await supabase
-          .from('fault_thresholds')
-          .select('*')
-          .limit(1)
-          .single();
-        
-        if (supabaseError) throw supabaseError;
-        
-        if (data) {
+        const response = await axiosInstance.get(GET_THRESH);
+        if (response.status === 200) {
+          const data = response.data;
           setThresholds(data);
+          setIsLoading(false);
+        } else {
+          console.error('Failed to fetch thresholds from Django API');
         }
-        setIsLoading(false);
       } catch (err) {
-        setError('Failed to load threshold settings from Supabase');
-        console.error('Supabase fetch error:', err);
-        setIsLoading(false);
+        console.error('Django API fetch error:', err);
       }
-    };
-
-    fetchThresholds();
+    }
+    djangoResponse();
   }, []);
 
   const handleInputChange = (e: { target: { name: any; value: any; type: any; checked: any; }; }) => {
@@ -68,7 +60,6 @@ const Configuration:React.FC = () => {
 
   const handleCancel = () => {
     setIsEditing(false);
-    // Optionally: refetch from Supabase to discard changes
   };
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
@@ -80,20 +71,11 @@ const Configuration:React.FC = () => {
     try {      
       const { id, updated_at, ...updateData } = thresholds;
 
-      // Will use django backend in another branch
       // Update threshold via  Django API
-      // const djangoResponse = await axiosInstance.put(SET_THRESH, updateData);
-      // if (djangoResponse.status !== 200) {
-      //   console.log('Failed to update thresholds via Django API');
-      // }
-
-      // Update threshold via Supabase
-      const { error: supabaseError } = await supabase
-        .from('fault_thresholds')
-        .update(updateData)
-        .eq('id', 1); // Assuming you have an id column
-      
-      if (supabaseError) throw supabaseError;
+      const djangoResponse = await axiosInstance.post(SET_THRESH, updateData);
+      if (djangoResponse.status !== 200) {
+        console.log('Failed to update thresholds via Django API');
+      }
       
       setSaveMessage('Threshold settings saved successfully!');
       setIsEditing(false);

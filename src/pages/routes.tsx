@@ -20,7 +20,7 @@ const routes: AppRoute[] = [
     { path: '/contact', name: 'Contact' },
   
     // Private/Admin routes
-    { path: '/dashboard', name: 'Dashboard', element: <Dashboard />, private: false },
+    { path: '/dashboard/*', name: 'Dashboard', element: <Dashboard />, private: false },
     { path: '/configuration', name: 'Configuration', element: <Configuration />, private: false },
     { path: '/analytics', name: 'Analytics', element: <Analytics />, private: false },
   ];

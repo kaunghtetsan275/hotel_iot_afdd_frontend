@@ -1,9 +1,9 @@
 // RealtimeDataMonitoring.tsx
 import React, { useEffect, useState} from 'react';
-import { supabase, SUPABASE_URL, SUPABASE_HEADERS } from '../config/supabaseClient';
+import { supabase} from '../config/supabaseClient';
+import axiosInstance from '../config/AxiosInstance';
 import { useSearchParams } from 'react-router-dom';
 import RealTimeDataFilterSelect from '../components/ui/RealTimeDataFilterSelect';
-import axios from 'axios';
 
 const defaultFilter = { hotel: '', floor: '', room: '', sensor_type: '', device: '' };
 
@@ -87,45 +87,60 @@ const RealtimeDataMonitoring: React.FC = () => {
   }, [devices]);
 
   useEffect(() => {
-    axios.get(`${SUPABASE_URL}/rest/v1/hotels`, { headers: SUPABASE_HEADERS })
+    const fetchHotels = async () => {
+      await axiosInstance.get("/hotels")
       .then(res => setHotels(res.data.map((hotel: { id: string; name: string; code: string }) => ({
         id: hotel.id,
         name: hotel.name,
         code: hotel.code,
-      }))));
+      }))));    
+    };
+
+    fetchHotels();
   }, []);
 
   useEffect(() => {
-    if (filter.hotel) {
-      axios.get(`${SUPABASE_URL}/rest/v1/floors?hotel_id=eq.${filter.hotel}`, { headers: SUPABASE_HEADERS })
+    const fetchFloors = async () => {
+      if (filter.hotel) {
+        await axiosInstance.get(`/hotels/${filter.hotel}/floors/`)
         .then(res => setFloors(res.data.map((floor: { id: string; floor_id: string; hotel_id: number }) => ({
           id: floor.id,
           floor_id: floor.floor_id,
           hotel_id: floor.hotel_id,
         }))));
-    }
+      }
+    };
+
+    fetchFloors();
   }, [filter.hotel]);
 
   useEffect(() => {
+    const fetchRooms = async () => {
     if (filter.floor) {
-      axios.get(`${SUPABASE_URL}/rest/v1/rooms?floor_id=eq.${filter.floor}`, { headers: SUPABASE_HEADERS })
-        .then(res => setRooms(res.data));
-    }
+      await axiosInstance.get(`/floors/${filter.floor}/rooms/`)
+      .then(res => setRooms(res.data.map((room: { id: string; name: string; room_number: string }) => ({
+          id: room.id,
+          name: room.name,
+          room_number: room.room_number,
+        }))));
+      }
+    };
+    fetchRooms();
   }, [filter.floor]);
 
   useEffect(() => {
-    if (filter.room) {
-      axios
-        .get(`${SUPABASE_URL}/rest/v1/devices?room_id=eq.${filter.room}`, { headers: SUPABASE_HEADERS })
-        .then((res) => setDevices(res.data.map((device: { id: string; sensor_type: string; device_identifier: string; room_id: number }) => ({
-          id: device.id,
-          sensor_type: device.sensor_type,
-          device_identifier: device.device_identifier,
-          room_id: device.room_id,
-        }))));
-    } else {
-      setDevices([]);
-    }
+    const fetchDevices = async () => {
+      if (filter.room) {
+          await axiosInstance.get(`/rooms/${filter.room}/devices/`)
+          .then(res => setDevices(res.data.map((device: { id: string; sensor_type: string; device_identifier: string; room_id: number }) => ({
+            id: device.id,
+            sensor_type: device.sensor_type,
+            device_identifier: device.device_identifier,
+            room_id: device.room_id,
+          }))));
+        }
+    };
+    fetchDevices();
   }, [filter.room]);
 
   return (
