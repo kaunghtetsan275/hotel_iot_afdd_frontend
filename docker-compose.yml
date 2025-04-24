@@ -3,7 +3,7 @@ services:
       container_name: django_backend
       build:
         context: https://github.com/kaunghtetsan275/hotel_iot_afdd_backend.git
-        dockerfile: Dockerfile.dev
+        dockerfile: Dockerfile
       command: sh -c "python manage.py collectstatic --noinput &&
                     python manage.py makemigrations && 
                     python manage.py migrate && 
