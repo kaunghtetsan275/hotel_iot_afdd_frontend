@@ -26,17 +26,19 @@ Both of these agents are available as python modules. Their API reference can be
 ## Spicy Diagrams
 ```mermaid
 graph LR
-    subgraph IoT Data Simulation Layer
-        A[IAQ Sensor Agent] --> B(RabbitMQ);
-        C[Life Being Sensor Agent] --> B;
-        D[Power Meter Sensor Agent] --> B;
+    subgraph Agents
+        A[IAQ Sensor Agent]
+        C[Life Being Sensor Agent]
+        D[Power Meter Sensor Agent]
     end
+     Agents --> B(RabbitMQ)
+     Agents -- Store Latest Data --> G((Supabase))
 
     subgraph "Data Processing & Storage Layer"
-        B -- Publishes Sensor Data --> E(Fault Detection Agent);
-        E -- Publishes Fault Status --> B;
-        E -- Stores Raw Data --> F((TimescaleDB));
-        E -- Threshold Fetch, Stores Latest Data & Fault Status --> G((Supabase));
+        B -- Publish Sensor Data --> E(Fault Detection Agent);
+        E -- Publish Fault Status --> B;
+        E -- Store Raw Data --> F((TimescaleDB));
+        E -- Fetch Threshold, Store Fault Status --> G;
     end
 
     subgraph "Backend API Layer (Django)"
@@ -49,13 +51,16 @@ graph LR
         J[Alarm Management UI] -- Fetch Data --> H;
         K[AFDD Setting UI] -- Update Threshold --> I;
         J -- Subscribe Realtime Updates --> G;
-        K -- Threshold Fetch --> G;
+        K -- Fetch Threshold --> H;
+        L[Analytics]
     end
 
     direction LR
-```  
+```
 <p style="text-align:center;">System Architecture Diagram of Hotel IoT AFDD</p>
-<p>This system architecture consists of four layers: simulated sensor agents (IAQ, Life Being, Power Meter) publish data to RabbitMQ in the IoT Data Simulation Layer. In the Data Processing & Storage Layer, RabbitMQ routes data to a Fault Detection Agent for analysis and to TimescaleDB for raw data storage; the agent also stores thresholds, latest readings, and fault status in Supabase. The Backend API Layer (Django) exposes RESTful APIs for fetching data and updating fault detection thresholds. The Frontend Layer (React) includes an Alarm Management UI for monitoring and an AFDD Setting UI for configuring thresholds, both interacting with Supabase and backend APIs, with real-time updates handled via Supabase subscriptions.<p>
+<p style="text-align:justify;">
+This system architecture consists of four layers: simulated sensor agents (IAQ, Life Being, Power Meter) publish data to RabbitMQ and Supabase in the Agent Layer. In the Data Processing & Storage Layer, RabbitMQ routes data to a Fault Detection Agent for fault detection and receives fault status in return. The agent also stores raw data in TimescaleDB for historical data analysis, fetches threshold from and publishes fault status to Supabase. The Backend API Layer (Django) acts as an API gateway to expose RESTful APIs for fetching data and updating fault detection thresholds between Frontend Layer and Database Storage Layer. The Frontend Layer (React) includes an Dashboard UI for monitoring and an Configuration UI for configuring thresholds, both interacting with Supabase and backend APIs, with real-time updates handled via Supabase subscriptions.
+</p>
 
 ## Installation And Usage
 
